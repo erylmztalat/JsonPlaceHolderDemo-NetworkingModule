@@ -44,7 +44,7 @@ public protocol NetworkRequest {
     associatedtype Response: Decodable
 
     /// The endpoint for the request.
-    var endpoint: String { get }
+    var endpoint: URL? { get }
     
     /// The HTTP method for the request.
     var method: RequestMethod { get }
@@ -98,7 +98,7 @@ public final class NetworkService: NetworkServiceProtocol {
     ///
     /// - Parameter request: The network request to perform.
     public func perform<T>(_ request: T) -> AnyPublisher<T.Response, NetworkError> where T : NetworkRequest {
-        guard let url = URL(string: request.endpoint) else {
+        guard let url = request.endpoint else {
             return Fail(error: NetworkError.invalidRequest).eraseToAnyPublisher()
         }
         

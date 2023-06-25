@@ -107,8 +107,8 @@ class MockURLSession: URLSessionProtocol {
 struct MockRequest: NetworkRequest {
     typealias Response = MockData
 
-    var endpoint: String {
-        return "https://test.com"
+    var endpoint: URL? {
+        return URL(string: "https://test.com")!
     }
 
     var method: RequestMethod {
