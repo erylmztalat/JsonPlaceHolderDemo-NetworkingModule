@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "NetworkService",
+    defaultLocalization: "en",
     platforms: [
         .macOS(.v10_15),
         .iOS(.v13)  // This line specifies that your package supports iOS 13 and later
