@@ -22,19 +22,19 @@ public enum NetworkError: Error {
     var localizedDescription: String {
         switch self {
         case .invalidRequest:
-            return "Invalid request"
+            return NSLocalizedString("invalidRequest", comment: "")
         case .encodingError:
-            return "Failed to encode the parameters"
+            return NSLocalizedString("encodingError", comment: "")
         case .decodingError:
-            return "Failed to decode the response"
+            return NSLocalizedString("decodingError", comment: "")
         case .serverError(let code):
-            return "Server error with status code: \(code)"
+            return String(format: NSLocalizedString("serverError", comment: ""), code)
         case .unexpectedResponse:
-            return "Unexpected response from the server"
+            return NSLocalizedString("unexpectedResponse", comment: "")
         case .noInternet:
-            return "No internet connection"
+            return NSLocalizedString("noInternet", comment: "")
         case .unknownError:
-            return "Unknown network error"
+            return NSLocalizedString("unknownError", comment: "")
         }
     }
 }

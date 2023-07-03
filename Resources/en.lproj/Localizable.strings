@@ -1,0 +1,7 @@
+"invalidRequest" = "Invalid request";
+"encodingError" = "Failed to encode the parameters";
+"decodingError" = "Failed to decode the response";
+"serverError" = "Server error with status code: %@";
+"unexpectedResponse" = "Unexpected response from the server";
+"noInternet" = "No internet connection";
+"unknownError" = "Unknown network error";
