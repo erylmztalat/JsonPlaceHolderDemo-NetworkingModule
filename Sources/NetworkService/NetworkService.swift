@@ -54,6 +54,9 @@ public protocol NetworkRequest {
     
     /// The parameters to include with the request.
     var parameters: [String: Any]? { get }
+    
+    /// New property for raw body data.
+    var rawBody: Data? { get }
 }
 
 /// A service that can perform network requests.
@@ -111,7 +114,9 @@ public final class NetworkService: NetworkServiceProtocol {
             }
         }
         
-        if let parameters = request.parameters {
+        if let rawBody = request.rawBody {
+            urlRequest.httpBody = rawBody
+        }else if let parameters = request.parameters {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: parameters)
                 urlRequest.httpBody = jsonData

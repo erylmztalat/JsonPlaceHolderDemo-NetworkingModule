@@ -105,6 +105,7 @@ class MockURLSession: URLSessionProtocol {
 
 /// A mock request for testing.
 struct MockRequest: NetworkRequest {
+    
     typealias Response = MockData
 
     var endpoint: URL? {
@@ -122,6 +123,8 @@ struct MockRequest: NetworkRequest {
     var parameters: [String: Any]? {
         return nil
     }
+    
+    var rawBody: Data? = nil
 }
 
 
