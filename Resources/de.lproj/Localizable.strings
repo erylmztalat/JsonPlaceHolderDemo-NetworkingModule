@@ -1,8 +1,0 @@
-"invalidRequest" = "Ungültige Anforderung";
-"encodingError" = "Fehler beim Codieren der Parameter";
-"decodingError" = "Fehler beim Decodieren der Antwort";
-"serverError" = "Serverfehler mit Statuscode: %@";
-"unexpectedResponse" = "Unerwartete Antwort vom Server";
-"noInternet" = "Keine Internetverbindung";
-"unknownError" = "Unbekannter Netzwerkfehler";
-
