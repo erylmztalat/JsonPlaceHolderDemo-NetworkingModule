@@ -19,7 +19,7 @@ public enum NetworkError: Error {
     case unknownError // An unknown error occurred.
 
     /// A localized message describing what error occurred.
-    var description: String {
+    var errorDescription: String {
         switch self {
         case .invalidRequest:
             return "Invalid request"
