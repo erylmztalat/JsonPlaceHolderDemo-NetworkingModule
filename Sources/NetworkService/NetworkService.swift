@@ -5,6 +5,8 @@ import Combine
 public enum RequestMethod: String {
     case get = "GET"
     case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
 }
 
 /// An error type representing failure cases in the `NetworkService`.
