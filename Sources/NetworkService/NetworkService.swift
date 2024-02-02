@@ -19,6 +19,7 @@ public enum NetworkError: Error {
     case unexpectedResponse // The server's response was unexpected.
     case noInternet // There is no Internet connection.
     case unknownError // An unknown error occurred.
+    case authenticationFailure
 
     /// A localized message describing what error occurred.
     public var description: String {
@@ -37,6 +38,8 @@ public enum NetworkError: Error {
             return "No internet connection"
         case .unknownError:
             return "Unknown network error"
+        case .authenticationFailure:
+            return "The email or password you entered is incorrect. Please try again."
         }
     }
 }
@@ -129,11 +132,18 @@ public final class NetworkService: NetworkServiceProtocol {
         
         return urlSession.sessionDataTaskPublisher(for: urlRequest)
             .tryMap { data, response in
-                guard let httpResponse = response as? HTTPURLResponse,
-                      200..<300 ~= httpResponse.statusCode else {
-                    throw NetworkError.serverError((response as? HTTPURLResponse)?.statusCode ?? 500)
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw NetworkError.unexpectedResponse
                 }
-                return data
+                
+                switch httpResponse.statusCode {
+                case 200..<300:
+                    return data
+                case 401:
+                    throw NetworkError.authenticationFailure
+                default:
+                    throw NetworkError.serverError(httpResponse.statusCode)
+                }
             }
             .decode(type: T.Response.self, decoder: JSONDecoder())
             .mapError { error in
@@ -141,6 +151,8 @@ public final class NetworkService: NetworkServiceProtocol {
                     return NetworkError.noInternet
                 } else if error is DecodingError {
                     return NetworkError.decodingError
+                } else if let networkError = error as? NetworkError {
+                    return networkError
                 } else {
                     return NetworkError.unknownError
                 }
