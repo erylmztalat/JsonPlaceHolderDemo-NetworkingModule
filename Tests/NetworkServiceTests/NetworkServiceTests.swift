@@ -12,10 +12,8 @@ final class NetworkServiceTests: XCTestCase {
     
     /// Sets up the required objects before each test is run.
     override func setUp() {
-        super.setUp()
-        mockURLSession = MockURLSession()
-        networkService = NetworkService(urlSession: mockURLSession)
-        mockRequest = MockRequest()
+        
+    
     }
     
     /// Clean up after each test run.

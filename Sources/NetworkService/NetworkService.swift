@@ -149,8 +149,32 @@ public final class NetworkService: NetworkServiceProtocol {
             .mapError { error in
                 if let urlError = error as? URLError, urlError.code == URLError.notConnectedToInternet {
                     return NetworkError.noInternet
-                } else if error is DecodingError {
-                    return NetworkError.decodingError
+                } else if let decodingError = error as? DecodingError {
+                    // Provide detailed information about the decoding error
+                    switch decodingError {
+                    case let .keyNotFound(key, context):
+                        print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
+                        print("CodingPath:", context.codingPath)
+                        return NetworkError.decodingError
+                        
+                    case let .valueNotFound(value, context):
+                        print("Value '\(value)' not found: \(context.debugDescription)")
+                        print("CodingPath:", context.codingPath)
+                        return NetworkError.decodingError
+                        
+                    case let .typeMismatch(type, context):
+                        print("Type '\(type)' mismatch: \(context.debugDescription)")
+                        print("CodingPath:", context.codingPath)
+                        return NetworkError.decodingError
+                        
+                    case let .dataCorrupted(context):
+                        print("Data corrupted: \(context.debugDescription)")
+                        print("CodingPath:", context.codingPath)
+                        return NetworkError.decodingError
+                        
+                    @unknown default:
+                        return NetworkError.decodingError
+                    }
                 } else if let networkError = error as? NetworkError {
                     return networkError
                 } else {
